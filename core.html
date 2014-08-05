@@ -1,0 +1,27 @@
+<html>
+<head><title>Fly PS</title>
+<style>
+body{font-family:Calibri;}
+</style>
+</head>
+<body>
+Welcome! L: next click sets top-left corner R: next click sets bottom-right corner
+C: clears image and data F: locate pixels
+This program should first color all brown spots green (which will require some
+empirical tuning), and then draw a semitransparent black circle at each fly. Hit
+F to find them, D to revert to the original image.
+<button type="button" onclick="turnGreen()">Locate flies</button>
+<br>
+<span id="timeLapse"></span>
+<br>
+<canvas id="canvas" width="585" height="1040"></canvas>
+<br>
+Protocol:
+My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of 
+the 2-second mark, and lift and drop the vial in one fell swoop.
+
+<script src="library.js"></script>
+<script src="main.js"></script>
+</body>
+
+</html>
