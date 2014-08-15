@@ -2,25 +2,33 @@
 <head><title>Fly PS</title>
 <style>
 body{font-family:Calibri;}
+.button{background-color:#088;color:white;font-size:24px;width:120px;text-align:center;padding:5px;display:inline-block;}
+.button:hover{background-color:#08F}
 </style>
 </head>
 <body>
-Welcome! L: next click sets top-left corner R: next click sets bottom-right corner
-C: clears image and data F: locate pixels
-This program should first color all brown spots green (which will require some
-empirical tuning), and then draw a semitransparent black circle at each fly. Hit
-F to find them, D to revert to the original image.
-<button type="button" onclick="turnGreen()">Locate flies</button>
+<div class="button" onclick="file_input.click()">Upload</div>
+<div class="button" onclick="plant()">Plant</div>
+<div class="button" onclick="turnGreen()">Run</div>
+<input id="file_input" type="file" style="display:none" multiple>
+<output id="file_output"></output>
 <br>
 <span id="timeLapse"></span>
 <br>
 <canvas id="canvas" width="585" height="1040"></canvas>
 <br>
 Protocol:
-My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of 
-the 2-second mark, and lift and drop the vial in one fell swoop.
+My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.
+<br>
+Welcome! L: next click sets top-left corner R: next click sets bottom-right corner
+C: clears image and data F: locate pixels
+This program should first color all brown spots green (which will require some
+empirical tuning), and then draw a semitransparent black circle at each fly. Hit
+F to find them, D to revert to the original image.
+
 
 <script src="library.js"></script>
+<script src="file.js"></script>
 <script src="main.js"></script>
 </body>
 
