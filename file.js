@@ -21,24 +21,3 @@ function plant(){
 	}
 	reader.readAsDataURL(files[0]);// set .result to data URL
 }
-
-
-
-  var files = evt.target.files; // FileList object
-    for (var i = 0, f; f = files[i]; i++) {
-      if (!f.type.match('image.*')) {
-        continue;
-      }
-      var reader = new FileReader();
-
-      // Closure to capture the file information.
-      reader.onload=function(e) {
-          // Render thumbnail.
-          var span = document.createElement('span');
-          span.innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(f.name), '"/>'].join('');
-          document.getElementById('list').insertBefore(span, null);
-        };
-
-      // Read in the image file as a data URL.
-      reader.readAsDataURL(f);
-    }

@@ -2,14 +2,17 @@
 <head><title>Fly PS</title>
 <style>
 body{font-family:Calibri;}
-.button{background-color:#088;color:white;font-size:24px;width:120px;text-align:center;padding:5px;display:inline-block;}
+.button{background-color:#088;color:white;font-size:24px;width:120px;text-align:center;padding:5px;display:inline-block}
 .button:hover{background-color:#08F}
+#file_output{position:absolute;right:0;top:35px;width:250px;}
 </style>
 </head>
 <body>
-<div class="button" onclick="file_input.click()">Upload</div>
-<div class="button" onclick="plant()">Plant</div>
-<div class="button" onclick="turnGreen()">Run</div>
+<div class="button" onclick="turnGreen()">Find</div>
+<div class="button" onclick="clearData()">Clear</div>
+<div class="button" onclick="file_input.click()" style="float:right">Upload</div>
+<div class="button" onclick="plant()" style="float:right;margin-right:5px">Plant</div>
+
 <input id="file_input" type="file" style="display:none" multiple>
 <output id="file_output"></output>
 <br>
@@ -17,14 +20,11 @@ body{font-family:Calibri;}
 <br>
 <canvas id="canvas" width="585" height="1040"></canvas>
 <br>
-Protocol:
-My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.
+Welcome! Set the search area with [T] and [B], hit [F] to locate more flies, and click
+to give the computer more hints. [C] clears the image.
+This program should first color the fly pixels green, and then draw a semitransparent black circle at each fly.
 <br>
-Welcome! L: next click sets top-left corner R: next click sets bottom-right corner
-C: clears image and data F: locate pixels
-This program should first color all brown spots green (which will require some
-empirical tuning), and then draw a semitransparent black circle at each fly. Hit
-F to find them, D to revert to the original image.
+Protocol: My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.
 
 
 <script src="library.js"></script>

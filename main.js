@@ -16,7 +16,7 @@ var PIXEL_RANGE=80;// MAXIMUM-MINIMUM=20
 var topLeft=[0,0];
 var bottomRight=[WIDTH,HEIGHT];
 image.src="vial.jpg";
-image.onload=repaint;
+image.onload=clearData;
 
 // change qualifying pixels green
 function turnGreen(){
@@ -59,6 +59,8 @@ function useHint(hint){
 
 
 
+var in_shadow=[false,false];
+
 // PARAMETERS adjusted by hint_pixel
 var interpixel_deviation=30;// between RG,GB,BR
 var minima=[60,50,55];
@@ -77,11 +79,12 @@ canvas.addEventListener("click",function(ev){
 
 document.addEventListener("keydown",function(ev){
     switch(ev.keyCode){
-        case 67:repaint();break;// C
-        case 68:ctx.drawImage(image,0,0,WIDTH,HEIGHT);break;// D
-        case 70:turnGreen();break;// F
-        case 76:V.copy(topLeft,mouse);break;//L
-        case 82:V.copy(bottomRight,mouse);break;//R
+        case 66:V.copy(bottomRight,mouse);shade(bottomRight,ev.keyCode);break;// Bottom
+        case 67:clearData();break;// Clear
+        case 70:turnGreen();break;// Find
+        case 80:plant();break;//Plant
+        case 84:V.copy(topLeft,mouse);shade(topLeft,ev.keyCode);break;// Top
+        case 85:file_input.click();// Upload
         //case 72:break; H
         default:console.log(ev.keyCode+" has not been registered.");
     }
@@ -94,9 +97,12 @@ function dot(point){
     ctx.fillStyle="rgba(0,0,0,0.2)";
     ctx.fill();
 }
-function repaint(){
+function clearData(){
     ctx.drawImage(image,0,0,WIDTH,HEIGHT);
-	ImgData=ctx.getImageData(0,0,WIDTH,HEIGHT);   
+	ImgData=ctx.getImageData(0,0,WIDTH,HEIGHT);
+    in_shadow=[false,false];
+    topRight=[0,0];
+    bottomRight=[WIDTH,HEIGHT];
 }
 function currentTime(){
     return new Date().getTime();
@@ -108,7 +114,25 @@ function indexOf(point){
     return 4*(WIDTH*point[1]+point[0]);
 }
 function getDev(i,j){
-        return Math.abs(hint_pixel[i]-hint_pixel[j]);
+    return Math.abs(hint_pixel[i]-hint_pixel[j]);
 }
-
-
+function shade(corner,direction){
+    ctx.fillStyle="rgba(0,0,0,0.3)";
+    if(direction==76){
+        if(in_shadow[1]){// if B already set
+            ctx.fillRect(0,0,WIDTH,corner[1]);// top
+            ctx.fillRect(0,corner[1],corner[0],HEIGHT);// left
+        }else{// avoid corners
+            ctx.fillRect(0,0,bottomRight[0],corner[1]);// top
+            ctx.fillRect(0,corner[1],corner[0],bottomRight[1]);// left
+        }
+    }else if(direction==82){
+        if(in_shadow[0]){// if T already set
+            ctx.fillRect(0,corner[1],WIDTH,HEIGHT);// bottom
+            ctx.fillRect(corner[0],0,WIDTH,corner[1]);// right
+        }else{// avoid corners
+            ctx.fillRect(topLeft[0],corner[1],WIDTH,HEIGHT);// bottom
+            ctx.fillRect(corner[0],topLeft[1],WIDTH,corner[1]);// right
+        }
+    }// close direction==76
+}
