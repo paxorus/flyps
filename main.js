@@ -34,6 +34,7 @@ function turnGreen(){
 	var time_lapse=currentTime()-start;
 	// write time to timeLapse element and to console
 	console.log(timeLapse.textContent="Operation took "+time_lapse/1000+" seconds.");
+    autoshade();
 }
 
 
@@ -119,23 +120,31 @@ function getDev(i,j){
 function shade(corner,direction){
     ctx.fillStyle="rgba(0,0,0,0.3)";
     if(direction==84 && !in_shadow[0]){
-        console.log("TL!");
-        if(in_shadow[1]){// if B already set
-            ctx.fillRect(0,0,WIDTH,corner[1]);// top
-            ctx.fillRect(0,corner[1],corner[0],HEIGHT);// left
-        }else{// avoid corners
+        if(in_shadow[1]){// if B already set, avoid corners
+            console.log("avoiding in TL");
             ctx.fillRect(0,0,bottomRight[0],corner[1]);// top
-            ctx.fillRect(0,corner[1],corner[0],bottomRight[1]);// left
+            ctx.fillRect(0,corner[1],corner[0],bottomRight[1]-corner[1]);// left
+        }else{// include corners
+            ctx.fillRect(0,0,WIDTH,corner[1]);// top
+            ctx.fillRect(0,corner[1],corner[0],HEIGHT-corner[1]);// left
         }
         in_shadow[0]=true;
-    }else if(direction==66 && in_shadow[1]){
-        if(in_shadow[0]){// if T already set
-            ctx.fillRect(0,corner[1],WIDTH,HEIGHT);// bottom
-            ctx.fillRect(corner[0],0,WIDTH,corner[1]);// right
-        }else{// avoid corners
-            ctx.fillRect(topLeft[0],corner[1],WIDTH,HEIGHT);// bottom
-            ctx.fillRect(corner[0],topLeft[1],WIDTH,corner[1]);// right
+    }else if(direction==66 && !in_shadow[1]){
+        if(in_shadow[0]){// if T already set, avoid corners
+            console.log("avoiding in BR");
+            ctx.fillRect(topLeft[0],corner[1],WIDTH-topLeft[0],HEIGHT-corner[1]);// bottom
+            ctx.fillRect(corner[0],topLeft[1],WIDTH-corner[0],corner[1]-topLeft[1]);// right
+        }else{// include corners
+            ctx.fillRect(0,corner[1],WIDTH,HEIGHT-corner[1]);// bottom
+            ctx.fillRect(corner[0],0,WIDTH-corner[0],corner[1]);// right
         }
         in_shadow[1]=true;
     }// close direction==76
+}
+function autoshade(){
+    ctx.fillStyle="rgba(0,0,0,0.3)";
+    ctx.fillRect(0,0,WIDTH,topLeft[1]);// top
+    ctx.fillRect(0,bottomRight[1],WIDTH,HEIGHT-bottomRight[1]);// bottom
+    ctx.fillRect(0,topLeft[1],topLeft[0],bottomRight[1]-topLeft[1]);
+    ctx.fillRect(bottomRight[0],topLeft[1],WIDTH-bottomRight[0],bottomRight[1]-topLeft[1]);
 }
