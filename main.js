@@ -71,10 +71,6 @@ var hint_pixel;
 // draw a circle, take the hint to ballpark MAXIMUM,MINIMUM, and INTERPIXEL_DEVIATION
 canvas.addEventListener("click",function(ev){
     mouse=[ev.offsetX,ev.offsetY];
-    dot(mouse);
-    // take the mouse hint: MINI=hint-DEV/2, MAXI=hint+DEV/2, INTERPIXEL[0]=1.5*(R-G)
-    hint_pixel=pixelAt(indexOf(mouse));
-    useHint(hint_pixel);
 });
 
 document.addEventListener("keydown",function(ev){
@@ -84,8 +80,12 @@ document.addEventListener("keydown",function(ev){
         case 70:turnGreen();break;// Find
         case 80:plant();break;//Plant
         case 84:V.copy(topLeft,mouse);shade(topLeft,ev.keyCode);break;// Top
-        case 85:file_input.click();// Upload
-        //case 72:break; H
+        case 85:file_input.click();break;// Upload
+        case 72:
+            dot(mouse);
+            // take the mouse hint: MINI=hint-DEV/2, MAXI=hint+DEV/2, INTERPIXEL[0]=1.5*(R-G)
+            hint_pixel=pixelAt(indexOf(mouse));
+            useHint(hint_pixel);break;// Hint
         default:console.log(ev.keyCode+" has not been registered.");
     }
 });
@@ -118,7 +118,8 @@ function getDev(i,j){
 }
 function shade(corner,direction){
     ctx.fillStyle="rgba(0,0,0,0.3)";
-    if(direction==76){
+    if(direction==84 && !in_shadow[0]){
+        console.log("TL!");
         if(in_shadow[1]){// if B already set
             ctx.fillRect(0,0,WIDTH,corner[1]);// top
             ctx.fillRect(0,corner[1],corner[0],HEIGHT);// left
@@ -126,7 +127,8 @@ function shade(corner,direction){
             ctx.fillRect(0,0,bottomRight[0],corner[1]);// top
             ctx.fillRect(0,corner[1],corner[0],bottomRight[1]);// left
         }
-    }else if(direction==82){
+        in_shadow[0]=true;
+    }else if(direction==66 && in_shadow[1]){
         if(in_shadow[0]){// if T already set
             ctx.fillRect(0,corner[1],WIDTH,HEIGHT);// bottom
             ctx.fillRect(corner[0],0,WIDTH,corner[1]);// right
@@ -134,5 +136,6 @@ function shade(corner,direction){
             ctx.fillRect(topLeft[0],corner[1],WIDTH,HEIGHT);// bottom
             ctx.fillRect(corner[0],topLeft[1],WIDTH,corner[1]);// right
         }
+        in_shadow[1]=true;
     }// close direction==76
 }
