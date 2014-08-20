@@ -1,9 +1,11 @@
 <html>
 <head><title>Fly PS</title>
 <style>
-body{font-family:Calibri;}
+body{font-family:Calibri}
 .button{background-color:#088;color:white;font-size:24px;width:120px;text-align:center;padding:5px;display:inline-block}
 .button:hover{background-color:#08F}
+.shade{background-color:#000;position:absolute;opacity:0.3;}
+.ball{width:12px;height:12px;background-color:rgba(0,0,0,0);border-radius:8px;border:2px dotted #000;position:absolute}
 #file_output{position:absolute;right:0;top:35px;width:250px;}
 </style>
 </head>
@@ -19,6 +21,18 @@ body{font-family:Calibri;}
 <span id="timeLapse"></span>
 <br>
 <canvas id="canvas" width="585" height="1040"></canvas>
+
+
+<div id="top_s" class="shade"></div>
+<div id="bottom_s" class="shade"></div>
+<div id="left_s" class="shade"></div>
+<div id="right_s" class="shade"></div>	
+<div id="ball0" class="ball" data-x="1" data-y="0"></div>
+<div id="ball1" class="ball" data-x="0" data-y="0"></div>
+<div id="ball2" class="ball" data-x="0" data-y="1"></div>
+<div id="ball3" class="ball" data-x="1" data-y="1"></div>	
+
+
 <br>
 Welcome! Set the search area with [T] and [B], and hit [F] to locate more flies. 
 [C] clears the image. [H] uses the last click as a hint of the fly color.
@@ -27,7 +41,9 @@ This program should first color the fly pixels green, and then draw a semitransp
 Protocol: My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.
 
 
-<script src="library.js"></script>
+
+<script src="function.js"></script>
+<script src="object.js"></script>
 <script src="file.js"></script>
 <script src="main.js"></script>
 </body>

@@ -1,3 +1,43 @@
+var timeLapse=document.getElementById("timeLapse");
+var canvas=document.getElementById("canvas");
+
+
+
+function CropCorner(elem,num){
+    this.elem=elem;
+    this.num=num;
+    this.set=function(x,y,w,h){
+        if(x!="no"){
+            this.elem.style.left=canvas.offsetLeft+x;
+        }
+        if(y!="no"){
+            this.elem.style.top=canvas.offsetTop+y;
+        }
+        if(w!="no"){
+            this.elem.style.width=w;
+        }
+        if(h!="no"){
+            this.elem.style.height=h;
+        }
+    }
+}
+
+function TrackBall(elem,num){
+    this.elem=elem;
+    this.num=num;
+    this.elem.draggable="true";
+    this.set=function(x,y){
+        if(x!="no"){
+            this.elem.style.left=canvas.offsetLeft+x-8;
+        }
+        if(y!="no"){
+            this.elem.style.top=canvas.offsetTop+y-8;
+        }
+    }
+}
+
+
+
 function Vector(){
     // [a+z,b+z,c+z]
     this.bump=function(a,b){
