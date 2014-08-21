@@ -90,7 +90,7 @@ function turnGreen(){
 	// write time to timeLapse element
     var time_lapse=currentTime()-start;
 	timeLapse.textContent="Operation took "+time_lapse/1000+" seconds. "
-        +"The average height is "+Math.floor(fly_height+" rows, unstd.";
+        +"The average height is "+Math.floor(fly_height)+" rows, unstd.";
 }
 
 
