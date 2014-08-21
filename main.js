@@ -28,7 +28,6 @@ image.onload=clearData;
 image.src="vial.jpg";
 var topLeft=[50,50];
 var bottomRight=[WIDTH-50,HEIGHT-50];
-var in_shadow=[false,false];
 
 // PARAMETERS adjusted by hint_pixel
 var interpixel_deviation=30;// between RG,GB,BR
@@ -85,8 +84,9 @@ function turnGreen(){
         }
 	}
 	ctx.putImageData(ImgData,0,0);
-    fly_height/=green_count;
-
+    if(green_count){
+       fly_height/=green_count;
+    }
 	// write time to timeLapse element
     var time_lapse=currentTime()-start;
 	timeLapse.textContent="Operation took "+time_lapse/1000+" seconds. "

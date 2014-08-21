@@ -94,9 +94,6 @@ function dot(point){
 function clearData(){
     ctx.drawImage(image,0,0,WIDTH,HEIGHT);
 	ImgData=ctx.getImageData(0,0,WIDTH,HEIGHT);
-    in_shadow=[false,false];
-    topRight=[0,0];
-    bottomRight=[WIDTH,HEIGHT];
 }
 
 // when dragover out of canvas, shiftShade with fake coordinates
