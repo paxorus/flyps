@@ -26,8 +26,8 @@ image.onload=clearData;
 
 // ADJUSTIBLE
 image.src="vial.jpg";
-var topLeft=[0,0];
-var bottomRight=[WIDTH,HEIGHT];
+var topLeft=[50,50];
+var bottomRight=[WIDTH-50,HEIGHT-50];
 var in_shadow=[false,false];
 
 // PARAMETERS adjusted by hint_pixel
@@ -89,7 +89,8 @@ function turnGreen(){
 
 	// write time to timeLapse element
     var time_lapse=currentTime()-start;
-	timeLapse.textContent="Operation took "+time_lapse/1000+" seconds. The average height is "+fly_height+" rows, unstd.";
+	timeLapse.textContent="Operation took "+time_lapse/1000+" seconds. "
+        +"The average height is "+Math.floor(fly_height+" rows, unstd.";
 }
 
 

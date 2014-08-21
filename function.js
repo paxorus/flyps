@@ -118,7 +118,7 @@ function isFly(index){
     return bool;
 }
 function getHeight(j){
-    var rows=(j-j%WIDTH)/WIDTH;
+    var rows=(j-j%WIDTH)/4/WIDTH;
     return HEIGHT-rows;
 }
 function getNode(id){
