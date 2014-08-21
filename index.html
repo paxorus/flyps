@@ -7,6 +7,7 @@ body{font-family:Calibri}
 .shade{background-color:#000;position:absolute;opacity:0.3;}
 .ball{width:12px;height:12px;background-color:rgba(0,0,0,0);border-radius:8px;border:2px dotted #FFF;position:absolute}
 
+#food_top{position:absolute;width:585px;height:10px;background-color:rgba(0,100,200,0.6);}
 #file_output{position:absolute;right:0;top:35px;width:250px;cursor:pointer;}
 </style>
 </head>
@@ -31,15 +32,16 @@ body{font-family:Calibri}
 <div id="ball1" class="ball" data-x="0" data-y="0"></div>
 <div id="ball2" class="ball" data-x="0" data-y="1"></div>
 <div id="ball3" class="ball" data-x="1" data-y="1"></div>	
-
+<div id="food_top" draggable="true"></div>
 
 <br>
-Welcome! Set the search area and hit [F] to locate flies. 
+Welcome! Set the search area and hit [F] to find flies. 
 [C] clears the image. [H] uses the last click as a hint of the fly color.
-To load your own images, upload first, and then plant to switch images.
-This program should first color the fly pixels green, and then draw a semitransparent black circle at each fly.
+To load your own images, upload first, and then plant ([O] and [P]) to switch images.
+
 <br>
-Protocol: My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.
+Protocol: My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop. 
+This program should first color the fly pixels green, and then draw a semitransparent black circle at each fly.
 
 
 

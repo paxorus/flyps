@@ -66,6 +66,23 @@ function shiftShade(ev){
         parseInt(corner_balls[3].elem.style.top,10)-canvas.offsetTop+8
     ];
 }
+function handleCornerDrag(ev){
+    var normal=[true];// assume normal unless flushBorder
+    if(ev.pageX<canvas.offsetLeft){
+        flushBorder(canvas.offsetLeft,ev.pageY,normal);
+    }else if(ev.pageX>canvas.offsetLeft+WIDTH){
+        flushBorder(canvas.offsetLeft+WIDTH,ev.pageY,normal);
+    }
+    if(ev.pageY<canvas.offsetTop){
+        flushBorder(ev.pageX,canvas.offsetTop,normal);
+    }else if(ev.pageY>canvas.offsetTop+HEIGHT){
+        flushBorder(ev.pageX,canvas.offsetTop+HEIGHT,normal);
+    }
+    if(normal[0]){// flushBorder signals successful shiftShade bypass
+        shiftShade(ev);
+    }
+}
+
 
 function dot(point){
     ctx.beginPath();
@@ -99,6 +116,10 @@ function isFly(index){
         bool=bool && (Math.abs(pixel[j]-pixel[(j+1)%3])<=interpixel_deviation);// RGB values differ by <= INTERPIXEL
     }
     return bool;
+}
+function getHeight(j){
+    var rows=(j-j%WIDTH)/WIDTH;
+    return HEIGHT-rows;
 }
 function getNode(id){
     return document.getElementById(id);
