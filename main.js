@@ -116,7 +116,7 @@ document.addEventListener("keydown",function(ev){
         case 67:clearData();break;// Clear
         case 70:turnGreen();break;// Find
         case 72:dot(mouse);hint_pixel=pixelAt(indexOf(mouse));useHint(hint_pixel);break;// Hint
-        case 80:plant();break;// Plant
+        case 79:case 80:plant(ev.keyCode);break;// Plant, reverse
         case 83:putShade();// Shade
         case 84:V.copy(topLeft,mouse);shade(topLeft,ev.keyCode);break;// Top
         case 85:file_input.click();break;// Upload

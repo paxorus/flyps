@@ -7,21 +7,21 @@ body{font-family:Calibri}
 .shade{background-color:#000;position:absolute;opacity:0.3;}
 .ball{width:12px;height:12px;background-color:rgba(0,0,0,0);border-radius:8px;border:2px dotted #FFF;position:absolute}
 
-#file_output{position:absolute;right:0;top:35px;width:250px;}
+#file_output{position:absolute;right:0;top:35px;width:250px;cursor:pointer;}
 </style>
 </head>
 <body>
 <div class="button" onclick="turnGreen()">Find</div>
 <div class="button" onclick="clearData()">Clear</div>
 <div class="button" onclick="file_input.click()" style="float:right">Upload</div>
-<div class="button" onclick="plant()" style="float:right;margin-right:5px">Plant</div>
+<div class="button" onclick="plant(80)" style="float:right;margin-right:5px">Plant</div>
 
 <input id="file_input" type="file" style="display:none" multiple>
 <output id="file_output"></output>
 <br>
 <span id="timeLapse"></span>
 <br>
-<canvas id="canvas" width="585" height="1040"></canvas>
+<canvas id="canvas" width="585" height="1040" data-num="-1"></canvas>
 
 <div id="top_s" class="shade"></div>
 <div id="bottom_s" class="shade"></div>
@@ -34,8 +34,9 @@ body{font-family:Calibri}
 
 
 <br>
-Welcome! Set the search area with [T] and [B], and hit [F] to locate more flies. 
+Welcome! Set the search area and hit [F] to locate flies. 
 [C] clears the image. [H] uses the last click as a hint of the fly color.
+To load your own images, upload first, and then plant to switch images.
 This program should first color the fly pixels green, and then draw a semitransparent black circle at each fly.
 <br>
 Protocol: My Android LG-D800 takes 2340x4160 (16:9) images. I focus on the vial label, set the camera to the 3-second timer, anticipate the appearance of the 2-second mark, and lift and drop the vial in one fell swoop.

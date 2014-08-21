@@ -57,8 +57,14 @@ function shiftShade(ev){
     }
 
     // set virtual search area
-    topLeft=[parseInt(side_shades[1].elem.style.left,10),parseInt(side_shades[1].elem.style.top,10)];
-    bottomRight=[parseInt(side_shades[3].elem.style.left,10),parseInt(side_shades[3].elem.style.top,10)];
+    topLeft=[
+        parseInt(corner_balls[1].elem.style.left,10)-canvas.offsetLeft+8,
+        parseInt(corner_balls[1].elem.style.top,10)-canvas.offsetTop+8
+    ];
+    bottomRight=[
+        parseInt(corner_balls[3].elem.style.left,10)-canvas.offsetLeft+8,
+        parseInt(corner_balls[3].elem.style.top,10)-canvas.offsetTop+8
+    ];
 }
 
 function dot(point){
