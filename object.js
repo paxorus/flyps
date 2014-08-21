@@ -1,6 +1,3 @@
-var timeLapse=document.getElementById("timeLapse");
-var canvas=document.getElementById("canvas");
-
 
 
 function CropCorner(elem,num){

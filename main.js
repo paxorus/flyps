@@ -2,11 +2,15 @@
 
 
 // INITIALIZATIONS
-var ImgData,Vector;
+var ImgData,Vector,TrackBall,CropCorner;
 var V=new Vector();
+var timeLapse=getNode("timeLapse");
+var canvas=getNode("canvas");
 var ctx=canvas.getContext('2d');
+
 var image=document.createElement("img");
-var timeLapse,canvas,top_s,bottom_s,left_s,right_s;// DOM IDs
+var dataTransfer;// because ev.dataTransfer not in GitHub
+
 
 // CONSTANTS
 var HEIGHT=1040;
@@ -17,9 +21,9 @@ image.onload=clearData;
 
 
 // ADJUSTIBLE
+image.src="vial.jpg";
 var topLeft=[0,0];
 var bottomRight=[WIDTH,HEIGHT];
-image.src="vial.jpg";
 var in_shadow=[false,false];
 
 // PARAMETERS adjusted by hint_pixel
@@ -34,8 +38,8 @@ var side_shades=["top_s","left_s","bottom_s","right_s"];
 for(var k in side_shades){
     side_shades[k]=new CropCorner(document.getElementById(side_shades[k]),k);
     side_shades[k].elem.addEventListener("dragover",function(ev){
+        ev.preventDefault();
         shiftShade(ev);
-        updateMouse(ev);
     });
 }
 
@@ -45,7 +49,7 @@ for(var i in corner_balls){
     corner_balls[i]=new TrackBall(document.getElementById("ball"+i),i);
     // track corner_balls between mousedown and mouseup
     corner_balls[i].elem.addEventListener("dragstart",function(ev){
-        ev.dataTransfer.setData("text",ev.target.id.substring(4));// see canvas drop event
+        dataTransfer=ev.target.id.substring(4);// see canvas drop event
     });
 }
 
@@ -66,22 +70,12 @@ function turnGreen(){
         }
 	}
 	ctx.putImageData(ImgData,0,0);
-	var time_lapse=currentTime()-start;
-	// write time to timeLapse element and to console
-	console.log(timeLapse.textContent="Operation took "+time_lapse/1000+" seconds.");
+
+	// write time to timeLapse element
+    var time_lapse=currentTime()-start;
+	timeLapse.textContent="Operation took "+time_lapse/1000+" seconds.";
 }
 
-
-
-function isFly(index){
-    var pixel=pixelAt(index);
-    var bool=true;
-    for (var j=0;j<=2;j++){
-        bool=bool && (pixel[j]>=minima[j]) && (pixel[j]<=maxima[j]);// between minimum and minimum+range
-        bool=bool && (Math.abs(pixel[j]-pixel[(j+1)%3])<=interpixel_deviation);// RGB values differ by <= INTERPIXEL
-    }
-    return bool;
-}
 
 /* minima 50, maxima 110 was good for 1-1 */
 function useHint(hint){
@@ -95,12 +89,25 @@ function useHint(hint){
 
 // EVENT LISTENERS
 canvas.addEventListener("click",function(ev){
-    updateMouse(ev);
-});
-canvas.addEventListener("dragover",function(ev){
     ev.preventDefault();
-    updateMouse(ev);
-    shiftShade(ev);
+    updateMouse(ev.pageX,ev.pageY);
+});
+document.addEventListener("dragover",function(ev){
+    ev.preventDefault();
+    var normal=[true];
+    if(ev.pageX<canvas.offsetLeft){
+        flushBorder(canvas.offsetLeft,ev.pageY,normal);
+    }else if(ev.pageX>canvas.offsetLeft+WIDTH){
+        flushBorder(canvas.offsetLeft+WIDTH,ev.pageY,normal);
+    }
+    if(ev.pageY<canvas.offsetTop){
+        flushBorder(ev.pageX,canvas.offsetTop,normal);
+    }else if(ev.pageY>canvas.offsetTop+HEIGHT){
+        flushBorder(ev.pageX,canvas.offsetTop+HEIGHT,normal);
+    }
+    if(normal[0]){// flushBorder signals successful shiftShade bypass
+        shiftShade(ev);
+    }
 });
 
 document.addEventListener("keydown",function(ev){
@@ -116,26 +123,3 @@ document.addEventListener("keydown",function(ev){
         default:console.log(ev.keyCode+" has not been registered.");
     }
 });
-
-
-
-/*function autoshade(){
-    ctx.fillStyle="rgba(0,0,0,0.3)";
-    ctx.fillRect(0,0,WIDTH,topLeft[1]);// top
-    ctx.fillRect(0,bottomRight[1],WIDTH,HEIGHT-bottomRight[1]);// bottom
-    ctx.fillRect(0,topLeft[1],topLeft[0],bottomRight[1]-topLeft[1]);
-    ctx.fillRect(bottomRight[0],topLeft[1],WIDTH-bottomRight[0],bottomRight[1]-topLeft[1]);
-}*/
-
-// put the four divs over the canvas
-function putShade(){
-    side_shades[0].set(0,0,WIDTH,50);
-    side_shades[1].set(0,50,50,HEIGHT-100);
-    side_shades[2].set(0,HEIGHT-50,WIDTH,50);
-    side_shades[3].set(WIDTH-50,50,50,HEIGHT-100);
-
-    corner_balls[0].set(WIDTH-50,50);
-    corner_balls[1].set(50,50);
-    corner_balls[2].set(50,HEIGHT-50);
-    corner_balls[3].set(WIDTH-50,HEIGHT-50);
-}
